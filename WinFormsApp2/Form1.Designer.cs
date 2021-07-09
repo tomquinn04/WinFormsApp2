@@ -48,8 +48,12 @@ namespace WinFormsApp2
             this.updateCustomersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteExistingRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.statusBarDBStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusBarDebugLine = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -179,6 +183,7 @@ namespace WinFormsApp2
             this.displayAllRecordsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.displayAllRecordsToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
             this.displayAllRecordsToolStripMenuItem.Text = "Display all records";
+            this.displayAllRecordsToolStripMenuItem.Click += new System.EventHandler(this.displayAllRecordsToolStripMenuItem_Click);
             // 
             // updateCustomersToolStripMenuItem
             // 
@@ -199,11 +204,38 @@ namespace WinFormsApp2
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // statusBarDBStatus
+            // 
+            this.statusBarDBStatus.Name = "statusBarDBStatus";
+            this.statusBarDBStatus.Size = new System.Drawing.Size(76, 24);
+            this.statusBarDBStatus.Text = "DB Status:";
+            // 
+            // statusBarDebugLine
+            // 
+            this.statusBarDebugLine.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.statusBarDebugLine.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.statusBarDebugLine.Name = "statusBarDebugLine";
+            this.statusBarDebugLine.Size = new System.Drawing.Size(79, 24);
+            this.statusBarDebugLine.Text = "Welcome!";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusBarDBStatus,
+            this.statusBarDebugLine});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 295);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(565, 30);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 298);
+            this.ClientSize = new System.Drawing.Size(565, 325);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label3);
@@ -220,6 +252,8 @@ namespace WinFormsApp2
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,6 +279,9 @@ namespace WinFormsApp2
         private System.Windows.Forms.ToolStripMenuItem displayAllRecordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateCustomersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteExistingRecordToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel statusBarDBStatus;
+        private System.Windows.Forms.ToolStripStatusLabel statusBarDebugLine;
     }
 }
 

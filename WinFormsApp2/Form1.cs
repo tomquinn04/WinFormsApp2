@@ -18,7 +18,12 @@ namespace WinFormsApp2
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e) { }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            DBConnect();
+            DBRetrieve();
+            DBShowResults();
+        }
         private void label1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void menuStrip1_ItemClicked(object sender, EventArgs e) { }
@@ -26,7 +31,7 @@ namespace WinFormsApp2
 
         private void linkToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {// shows low coupling by calling a procedure that connects to the DB and sets up the required objects
-            DBConnect(DatabaseConnection.SQLCommand);
+            DBConnect();
         }
 
         private void closeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -37,30 +42,34 @@ namespace WinFormsApp2
 
         // ----- DB FUNCTIONS ----- //
 
-        private static void DBConnect(string SQLCommand)
+        private void DBConnect() // does this need SQLCommand? it doesn't do anything with this param
         {// closes then reopens the database connection
             try
             {
                 DatabaseConnection.DBConnection.Close(); // in case the DB is already open, closes first
                 DatabaseConnection.DBConnection.Open();
-                MessageBox.Show("DB Connected");
+                UpdateDBStatusBar("Connected");
             }
-            catch
+            catch (Exception Exception1)
             {
-                MessageBox.Show("DB Connection failed");
+                UpdateDBStatusBar("Disconnected");
+                UpdateDebugStatusBar("DB Disconnect Failed");
+                MessageBox.Show("Error: " + Exception1.ToString());
             }
         }
 
-        private static void DBClose()
+        private void DBClose()
         {
             try
             {
                 DatabaseConnection.DBConnection.Close();
-                MessageBox.Show("DB Disconnected");
+                UpdateDBStatusBar("Disconnected");
             }
-            catch
+            catch (Exception Exception1)
             {
-                MessageBox.Show("DB Disconnect failed");
+                UpdateDBStatusBar("?");
+                UpdateDebugStatusBar("DB Disconnect Failed");
+                MessageBox.Show("Error: " + Exception1.ToString());
             }
         }
 
@@ -80,11 +89,11 @@ namespace WinFormsApp2
             catch (Exception Exception1)
             {
                 MessageBox.Show("Record add FAILED");
-                MessageBox.Show("Error: {0}", Exception1.ToString());
+                MessageBox.Show("Error: " + Exception1.ToString());
             }
         }
 
-        private static void DBDeleteRecord()
+        private void DBDeleteRecord()
         {
             try
             {
@@ -95,38 +104,56 @@ namespace WinFormsApp2
                 // execute commands
                 DatabaseConnection.DBConnection.Open();
                 DatabaseConnection.DBCommand.ExecuteNonQuery();
-                MessageBox.Show("Record 999 deleted successfully");
+                UpdateDebugStatusBar("Record 999 deleted successfully");
             }
             catch (Exception Exception1)
             {
                 MessageBox.Show("Record delete FAILED");
-                MessageBox.Show("Error: {0}", Exception1.ToString());
+                MessageBox.Show("Error: " + Exception1.ToString());
             }
         }
 
-        private static void DBRetrieve()
+        private void DBRetrieve()
         {
             try
             {
+                //DatabaseConnection.DBConnection.Close(); redundant
+                DBConnect();
                 DatabaseConnection.DBReader = DatabaseConnection.DBCommand.ExecuteReader();
-                MessageBox.Show("DB Retrieve successful");
+                UpdateDebugStatusBar("DB Retrieve successful");
             }
             catch (Exception Exception1)
             {
                 MessageBox.Show("DB Retrieve FAILED");
-                MessageBox.Show("Error: {0}", Exception1.ToString());
+                MessageBox.Show("Error: " + Exception1.ToString());
             }
         }
 
-        private static void DBShowResults()
+        private void DBShowResults()
         {
+            DBRetrieve();
             listBox1.Items.Clear();
             while (DatabaseConnection.DBReader.Read())
             {
                 listBox1.Items.Add(DatabaseConnection.DBReader[0].ToString() + ": " + DatabaseConnection.DBReader[1].ToString() + DatabaseConnection.DBReader[2].ToString());
             }
+            UpdateDebugStatusBar("Results shown in listBox1");
         }
 
+        private void UpdateDBStatusBar(string status)
+        {
+            statusBarDBStatus.Text = "DB Status: " + status;
+        }
 
+        private void UpdateDebugStatusBar(string status)
+        {
+            statusBarDebugLine.Text = DateTime.Now.ToString("hh:mm:ss") + " " + status;
+        }
+
+        private void displayAllRecordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DBRetrieve();
+            DBShowResults();
+        }
     }
 }

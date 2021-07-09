@@ -7,7 +7,7 @@ namespace WinFormsApp2
 {
     class DatabaseConnection
     {
-        public static string ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\"C:\\Users\\tquin\\OneDrive - Shrewsbury Colleges Group\\source\\repos\\WinFormsApp2\\callsystem.mdb";
+        public static string ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\"C:/Users/tquin/Documents/CS Repos/WinFormsApp2/callsystem.mdb\"";
         public static string SQLCommand = "Select * from CustomerDetails";
         public static OleDbConnection DBConnection = new OleDbConnection(DatabaseConnection.ConnectionString);
         public static OleDbDataReader DBReader;
