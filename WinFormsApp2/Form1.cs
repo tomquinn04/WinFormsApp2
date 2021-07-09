@@ -120,7 +120,11 @@ namespace WinFormsApp2
 
         private static void DBShowResults()
         {
-            
+            listBox1.Items.Clear();
+            while (DatabaseConnection.DBReader.Read())
+            {
+                listBox1.Items.Add(DatabaseConnection.DBReader[0].ToString() + ": " + DatabaseConnection.DBReader[1].ToString() + DatabaseConnection.DBReader[2].ToString());
+            }
         }
 
 
